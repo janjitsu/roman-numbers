@@ -9,5 +9,4 @@ RUN CGO_ENABLED=0 go build -o /bin/server
 
 FROM scratch
 COPY --from=build /bin/server /bin/server
-EXPOSE 80
 ENTRYPOINT ["/bin/server"]

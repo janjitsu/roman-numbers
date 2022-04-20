@@ -4,6 +4,9 @@ build:
 container:
 	docker container run -p 8080:8080 roman-numbers
 
+container_alt:
+	docker container run -p 8082:8080 roman-numbers
+
 run:
 	go run app/http/server.go
 
