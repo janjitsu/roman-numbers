@@ -1,0 +1,14 @@
+# GraphQL schema example
+#
+type RomanNumber {
+    number: String!
+    value: Int!
+}
+
+type Query {
+    introspection: String!
+}
+
+type Mutation {
+    search(text: String!):  RomanNumber!
+}
