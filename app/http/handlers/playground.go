@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Playground handler enables graphql insception on Web Browser
 func PlaygroundHandler(route string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		h := playground.Handler("GraphQL", route)

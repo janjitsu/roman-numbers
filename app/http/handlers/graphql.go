@@ -8,6 +8,7 @@ import (
 	"studiosol.com.br/janjitsu/roman-numbers/app/roman"
 )
 
+// Main graphql handler passes down request to graphql resolvers
 func GraphqlHandler(search roman.Finder) gin.HandlerFunc {
 	h := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{search}}))
 

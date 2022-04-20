@@ -1,8 +1,5 @@
 package graph
 
-// This file will be automatically regenerated based on the schema, any resolver implementations
-// will be copied through when generating and any unknown code will be moved to the end.
-
 import (
 	"context"
 
@@ -10,12 +7,14 @@ import (
 	"studiosol.com.br/janjitsu/roman-numbers/app/roman"
 )
 
+// Search mutation retrieves roman numbers from Search service
 func (r *mutationResolver) Search(ctx context.Context, text string) (*roman.RomanNumber, error) {
 
 	romanNumber := r.Resolver.Search.FindTopValueInString(text)
 	return romanNumber, nil
 }
 
+// This query was needed because introspection requires at least one query on graphql schema, without it, it throws an parsing error
 func (r *queryResolver) Introspection(ctx context.Context) (string, error) {
 	return "This query is only for introspection", nil
 }
