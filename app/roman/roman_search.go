@@ -2,12 +2,45 @@ package roman
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strings"
 )
 
-func CreateFromString(text string) (*RomanNumber, error) {
+type Search struct {
+	Result []RomanNumber
+}
+
+func (r *Search) FindTopValueInString(text string) *RomanNumber {
+	r.findInString(text)
+	topValue := 0
+	var topRomanNumber RomanNumber
+
+	for _, number := range r.Result {
+		if number.Value > topValue {
+			topValue = number.Value
+			topRomanNumber = number
+		}
+	}
+
+	return &topRomanNumber
+}
+
+func (r *Search) findInString(text string) *Search {
+	r.Result = []RomanNumber{}
+
+	rgxp, _ := regexp.Compile("[IVXLCDM]+")
+
+	words := rgxp.FindAllString(text, -1)
+
+	for _, word := range words {
+		romanNumber, _ := r.createFromString(word)
+		r.Result = append(r.Result, *romanNumber)
+	}
+
+	return r
+}
+
+func (r *Search) createFromString(text string) (*RomanNumber, error) {
 
 	roman := map[string]int{
 		"I":  1,
@@ -29,8 +62,8 @@ func CreateFromString(text string) (*RomanNumber, error) {
 		"MM": 2000,
 	}
 
-	r, _ := regexp.Compile("[^IVXLCDM]")
-	if r.MatchString(text) {
+	rgxp, _ := regexp.Compile("[^IVXLCDM]")
+	if rgxp.MatchString(text) {
 		return nil, errors.New("Invalid Roman Number word")
 	}
 
@@ -49,7 +82,6 @@ func CreateFromString(text string) (*RomanNumber, error) {
 		}
 
 		if roman[chars] > 0 {
-			fmt.Printf("%s = %d\n", chars, roman[chars])
 			total += roman[chars]
 			chars = ""
 		}
